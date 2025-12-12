@@ -1,0 +1,131 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace Sketcher3D.GeometryEngine
+{
+    internal class Cuboid : Shape
+    {
+        private double mLength;
+        private double mWidth;
+        private double mHeight;
+
+        public Cuboid(string name, double length, double width, double height) : base("Cuboid", name)
+        {
+            mLength = length;
+            mWidth = width;
+            mHeight = height;
+            build();
+        }
+
+        public double GetLength()  { return mLength; }
+        public double GetWidth() { return mWidth; }
+        public double GetHeight() { return mHeight; }
+
+
+        protected void build() 
+        {
+            double x = 0;
+            double y = 0;
+            double z = 0;
+
+            int p0Ind = mTriangulation.GetPointIndex(new Point(x, y, z));
+            int p1Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y, z));
+            int p2Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y + mWidth, z));
+
+            mTriangulation.AddTriangle(p0Ind, p2Ind, p1Ind); // front
+
+            int p3Ind = mTriangulation.GetPointIndex(new Point(x, y + mWidth, z));
+            mTriangulation.AddTriangle(p0Ind, p3Ind, p2Ind); // front
+
+            int p4Ind = mTriangulation.GetPointIndex(new Point(x, y, z + mHeight));
+            int p5Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y, z + mHeight));
+            int p6Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y + mWidth, z + mHeight));
+
+            mTriangulation.AddTriangle(p4Ind, p5Ind, p6Ind); // back
+
+            int p7Ind = mTriangulation.GetPointIndex(new Point(x, y + mWidth, z + mHeight));
+            mTriangulation.AddTriangle(p4Ind, p6Ind, p7Ind); // back
+
+            mTriangulation.AddTriangle(p7Ind, p6Ind, p2Ind); // top
+            mTriangulation.AddTriangle(p7Ind, p2Ind, p3Ind); // top
+
+            mTriangulation.AddTriangle(p0Ind, p1Ind, p5Ind); // bottom
+            mTriangulation.AddTriangle(p0Ind, p5Ind, p4Ind); // bottom
+
+            mTriangulation.AddTriangle(p5Ind, p1Ind, p2Ind); // right
+            mTriangulation.AddTriangle(p5Ind, p2Ind, p6Ind); // right
+
+            mTriangulation.AddTriangle(p0Ind, p4Ind, p7Ind); // left
+            mTriangulation.AddTriangle(p0Ind, p7Ind, p3Ind); // left
+        }
+
+        public void Save(StreamWriter writer)
+        {
+            writer.WriteLine($"{GetShapeType()} {GetShapeName()} " +
+                $"L {GetLength()} W {GetWidth()} H {GetHeight()}");
+
+
+        }
+        public void SaveForGNU(StreamWriter writer)
+        {
+            List<List<Point>> vec = new List<List<Point>>();
+            List <Point> pts = new List<Point>();
+
+            double x = 0;
+            double y = 0;
+            double z = 0;
+
+            pts.Add(new Point(x, y, z));//p1
+            pts.Add(new Point(x + mLength, y, z));//p2
+            pts.Add(new Point(x + mLength, y + mWidth, z));//p3
+            pts.Add(new Point(x, y + mWidth, z));//p4
+            pts.Add(new Point(x, y, z));//p1
+            vec.Add(pts);
+            pts.Clear();
+
+            pts.Add(new Point(x, y, z + mHeight));//p5
+            pts.Add(new Point(x + mLength, y, z + mHeight));//p6
+            pts.Add(new Point(x + mLength, y + mWidth, z + mHeight));//p7
+            pts.Add(new Point(x, y + mWidth, z + mHeight));//p8
+            pts.Add(new Point(x, y, z + mHeight));//p1
+            vec.Add(pts);
+            pts.Clear();
+
+            pts.Add(new Point(x, y, z));//p1
+            pts.Add(new Point(x, y, z + mHeight));//p5
+            vec.Add(pts);
+            pts.Clear();
+
+            pts.Add(new Point(x + mLength, y, z));//p2
+            pts.Add(new Point(x + mLength, y, z + mHeight));//p6
+            vec.Add(pts);
+            pts.Clear();
+
+            pts.Add(new Point(x + mLength, y + mWidth, z));//p3
+            pts.Add(new Point(x + mLength, y + mWidth, z + mHeight));//p7
+            vec.Add(pts);
+            pts.Clear();
+
+            pts.Add(new Point(x, y + mWidth, z));//p4
+            pts.Add(new Point(x, y + mWidth, z + mHeight));//p8
+            vec.Add(pts);
+            pts.Clear();
+
+            foreach ( var ptsVec in vec)
+	{
+                foreach (var pt in ptsVec)
+		{
+                    pt.writeXYZ(out);
+                }
+		out << "\n\n";
+            }
+	out << "\n\n";
+        }
+    }
+}
