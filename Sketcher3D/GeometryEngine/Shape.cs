@@ -10,8 +10,9 @@ namespace Sketcher3D.GeometryEngine
 {
     internal abstract class Shape
     {
-        private string mName;
         private string mType;
+        private string mName;
+        
         public Shape(string type, string name) 
         {
             this.mType = type;

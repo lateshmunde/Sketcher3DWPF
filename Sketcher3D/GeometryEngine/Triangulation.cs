@@ -69,19 +69,19 @@ namespace Sketcher3D.GeometryEngine
         {
             List<double> points = new List<double>();
 
-            foreach(Triangle t in mTriangles)
+            foreach(Triangle tri in mTriangles)
             {
-                points.Add(mPoints[t.m1].GetX());
-                points.Add(mPoints[t.m1].GetY());
-                points.Add(mPoints[t.m1].GetZ());
+                points.Add(mPoints[tri.m1].GetX());
+                points.Add(mPoints[tri.m1].GetY());
+                points.Add(mPoints[tri.m1].GetZ());
 
-                points.Add(mPoints[t.m2].GetX());
-                points.Add(mPoints[t.m2].GetY());
-                points.Add(mPoints[t.m2].GetZ());
+                points.Add(mPoints[tri.m2].GetX());
+                points.Add(mPoints[tri.m2].GetY());
+                points.Add(mPoints[tri.m2].GetZ());
 
-                points.Add(mPoints[t.m3].GetX());
-                points.Add(mPoints[t.m3].GetY());
-                points.Add(mPoints[t.m3].GetZ());
+                points.Add(mPoints[tri.m3].GetX());
+                points.Add(mPoints[tri.m3].GetY());
+                points.Add(mPoints[tri.m3].GetZ());
             }
             return points;
         }
@@ -90,9 +90,9 @@ namespace Sketcher3D.GeometryEngine
         {
             List<double> points = new List<double>();
 
-            foreach (Triangle t in mTriangles)
+            foreach (Triangle tri in mTriangles)
             {
-                Point pt = CalculateNormal(t);
+                Point pt = CalculateNormal(tri);
 
                 points.Add(pt.GetX());
                 points.Add(pt.GetY());

@@ -63,9 +63,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GeometryEngine\Cone.cs" />
+    <Compile Include="GeometryEngine\Cube.cs" />
     <Compile Include="GeometryEngine\Cuboid.cs" />
+    <Compile Include="GeometryEngine\Cylinder.cs" />
     <Compile Include="GeometryEngine\Point.cs" />
+    <Compile Include="GeometryEngine\Pyramid.cs" />
     <Compile Include="GeometryEngine\Shape.cs" />
+    <Compile Include="GeometryEngine\Sphere.cs" />
     <Compile Include="GeometryEngine\Triangle.cs" />
     <Compile Include="GeometryEngine\Triangulation.cs" />
     <Compile Include="MainWindow.xaml.cs">

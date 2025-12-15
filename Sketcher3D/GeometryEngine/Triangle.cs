@@ -13,12 +13,13 @@ namespace Sketcher3D.GeometryEngine
         public int m3;
         public Point mNormal;
 
-        public Triangle(int m1, int m2, int m3, Point mNormal = null)
+        public Triangle(int m1, int m2, int m3, Point normal = null)
         {
-            if(mNormal == null)
-                mNormal = new Point();
+            if(normal == null)
+                normal = new Point();
             else 
-                this.mNormal = mNormal;
+                this.mNormal = normal;
+
             this.m1 = m1;
             this.m2 = m2;
             this.m3 = m3;

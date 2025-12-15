@@ -20,7 +20,7 @@ namespace Sketcher3D.GeometryEngine
             mLength = length;
             mWidth = width;
             mHeight = height;
-            build();
+            Build();
         }
 
         public double GetLength()  { return mLength; }
@@ -28,7 +28,7 @@ namespace Sketcher3D.GeometryEngine
         public double GetHeight() { return mHeight; }
 
 
-        protected void build() 
+        protected override void Build  () 
         {
             double x = 0;
             double y = 0;
@@ -65,14 +65,12 @@ namespace Sketcher3D.GeometryEngine
             mTriangulation.AddTriangle(p0Ind, p7Ind, p3Ind); // left
         }
 
-        public void Save(StreamWriter writer)
+        public override void Save(StreamWriter writer)
         {
             writer.WriteLine($"{GetShapeType()} {GetShapeName()} " +
                 $"L {GetLength()} W {GetWidth()} H {GetHeight()}");
-
-
         }
-        public void SaveForGNU(StreamWriter writer)
+        public override void SaveForGNU(StreamWriter writer)
         {
             List<List<Point>> vec = new List<List<Point>>();
             List <Point> pts = new List<Point>();
