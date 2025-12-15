@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock Name="tbStatus" FontSize="75" VerticalAlignment="Top" HorizontalAlignment="Center" />
+
+        <Button Name="btnToggleRun" Width="100" Height="50" 
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Content="Run" FontSize="30" Click="btnToggleRun_Click"/>
     </Grid>
 </Window>
