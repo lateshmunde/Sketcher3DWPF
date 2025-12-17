@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Matrix
+    public class Matrix
     {
         private int mRows;
         private int mCols;

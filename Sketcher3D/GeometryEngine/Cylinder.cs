@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Cylinder : Shape
+    public class Cylinder : Shape
     {
         private double mRadius;
         private double mHeight;

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Sphere : Shape
+    public class Sphere : Shape
     {
         private double mRadius;
 

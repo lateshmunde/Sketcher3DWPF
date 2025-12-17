@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Point
+    public class Point
     {
         private double mX;
         private double mY;

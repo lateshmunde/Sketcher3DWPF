@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Cone : Shape
+    public class Cone : Shape
     {
         private double mRadius;
         private double mHeight;

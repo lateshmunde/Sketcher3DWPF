@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Triangulation
+    public class Triangulation
     {
         private List<Point> mPoints = new List<Point>();
         private List<Point> mNormals = new List<Point>();

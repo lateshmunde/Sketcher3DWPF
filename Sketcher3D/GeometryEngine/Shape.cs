@@ -2,7 +2,7 @@
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal abstract class Shape
+    abstract public class Shape
     {
         private string mType;
         private string mName;

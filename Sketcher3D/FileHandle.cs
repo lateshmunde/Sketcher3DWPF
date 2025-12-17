@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sketcher3D
 {
-    internal class FileHandle
+    public class FileHandle
     {
         public FileHandle() { }
 

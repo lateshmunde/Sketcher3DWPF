@@ -23,10 +23,7 @@ namespace Sketcher3D
             BuildUI();
         }
 
-        public Shape GetShape()
-        {
-            return CreatedShape;
-        }
+        public Shape GetShape() => CreatedShape;
 
         private void BuildUI()
         {
@@ -146,5 +143,7 @@ namespace Sketcher3D
         {
             DialogResult = false;
         }
+
+    
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sketcher3D
 {
-    internal class ShapeManager
+    public class ShapeManager
     {
         private List<Shape> mShapes = new List<Shape>();
         public ShapeManager() { }

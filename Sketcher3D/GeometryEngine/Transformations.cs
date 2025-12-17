@@ -2,7 +2,7 @@
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Transformations
+    public class Transformations
     {
         public Transformations() { }
 

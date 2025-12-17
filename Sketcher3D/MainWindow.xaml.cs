@@ -93,7 +93,7 @@ namespace Sketcher3D
 
             if (dlg.ShowDialog() == true)
             {
-                AddShapes(dlg.CreatedShape);
+                AddShapes(dlg.GetShape());
             }
         }
     }

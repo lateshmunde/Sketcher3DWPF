@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Pyramid : Shape
+    public class Pyramid : Shape
     {
         private double mBaseLength;
         private double mBaseWidth;

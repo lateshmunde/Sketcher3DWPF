@@ -31,11 +31,11 @@
             <Button Content="OK"
                 Width="80"
                 Margin="10"
-                Click="OkButton_Cuboid_Click"/>
+                Click="Ok_Click"/>
             <Button Content="Cancel"
                 Width="80"
                 Margin="10"
-                Click="CancelButton_Click"/>
+                Click="Cancel_Click"/>
         </StackPanel>
     </Grid>
 

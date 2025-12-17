@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Cube : Shape
+    public class Cube : Shape
     {
         private double mSide;
 

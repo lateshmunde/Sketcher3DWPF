@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Sketcher3D.GeometryEngine
 {
-    internal class Cuboid : Shape
+    public class Cuboid : Shape
     {
         private double mLength;
         private double mWidth;

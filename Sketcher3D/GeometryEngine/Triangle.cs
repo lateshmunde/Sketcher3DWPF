@@ -1,6 +1,6 @@
 ﻿namespace Sketcher3D.GeometryEngine
 {
-    internal class Triangle
+    public class Triangle
     {
         public int m1;
         public int m2;
