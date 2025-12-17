@@ -5,7 +5,7 @@ namespace Sketcher3D
 {
     internal class ShapeManager
     {
-        private List<Shape> mShapes;
+        private List<Shape> mShapes = new List<Shape>();
         public ShapeManager() { }
 
         public void AddShape(Shape shape)

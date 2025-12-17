@@ -7,10 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock Name="tbStatus" FontSize="75" VerticalAlignment="Top" HorizontalAlignment="Center" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition />
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
 
-        <Button Name="btnToggleRun" Width="100" Height="50" 
-                VerticalAlignment="Center" HorizontalAlignment="Center"
-                Content="Run" FontSize="30" Click="btnToggleRun_Click"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Menu>
+                <MenuItem Header="File" FontSize="16">
+                    <MenuItem Header="Save(.skt)" FontSize="14"/>
+                    <MenuItem Header="SaveGNU(.dat)" FontSize="14"/>
+                </MenuItem>
+                <MenuItem Header="Edit" FontSize="16">
+                    <MenuItem Header="Clear" FontSize="14"/>
+                </MenuItem>
+            </Menu>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Menu>
+                    <Button Name="Cuboid" Content="Cuboid" FontSize="18" Width="70" Height="30" Margin="4" Click="Cuboid_Click" />
+                    <Button Name="Cube" Content="Cube" FontSize="18" Width="70" Height="30" Margin="4"/>
+                    <Button Name="Cone" Content="Cone" FontSize="18" Width="70" Height="30" Margin="4"/>
+                    <Button Name="Sphere" Content="Sphere" FontSize="18" Width="70" Height="30" Margin="4"/>
+                    <Button Name="Cylinder" Content="Cylinder" FontSize="18" Width="70" Height="30" Margin="4"/>
+                    <Button Name="Pyramid" Content="Pyramid" FontSize="18" Width="70" Height="30" Margin="4"/>
+                </Menu>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
