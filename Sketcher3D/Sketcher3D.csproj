@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="FileHandle.cs" />
+    <Compile Include="MeshBuilder.cs" />
     <Compile Include="ShapeInputDlg.xaml.cs">
       <DependentUpon>ShapeInputDlg.xaml</DependentUpon>
     </Compile>

@@ -1,64 +1,150 @@
 ﻿using Sketcher3D.GeometryEngine;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Sketcher3D
 {
-    /// <summary>
-    /// Interaction logic for ShapeInputDlg.xaml
-    /// </summary>
     public partial class ShapeInputDlg : Window
     {
-        public ShapeInputDlg()
+        private Shape CreatedShape;
+        //public Shape CreatedShape;
+
+        private string shapeType;
+
+        private TextBox nameBox;
+        private TextBox aBox; // length, radius, side
+        private TextBox bBox; // width
+        private TextBox cBox; // heig
+
+        public ShapeInputDlg(string type)
         {
             InitializeComponent();
+            shapeType = type;
+            BuildUI();
         }
 
-        private void OkButton_Cuboid_Click(object sender, RoutedEventArgs e)
+        public Shape GetShape()
         {
-            if (!double.TryParse(len.Text, out double l) ||
-            !double.TryParse(wid.Text, out double w) ||
-            !double.TryParse(ht.Text, out double h))
+            return CreatedShape;
+        }
+
+        private void BuildUI()
+        {
+            CentralGrid.Children.Clear();
+            CentralGrid.RowDefinitions.Clear();
+
+            nameBox = Add("Name", "Default");
+
+            if (shapeType == "Cuboid")
             {
-                MessageBox.Show("Enter valid numbers");
-                return;
+                aBox = Add("Length", "10");
+                bBox = Add("Width", "10");
+                cBox = Add("Height", "10");
             }
-            string namCb = name.Text;
-            double length = l;
-            double width = w;
-            double height = h;
-
-            Cuboid nam = new Cuboid(namCb, length, width, height);
-            ShapeManager smgr = new ShapeManager();
-            smgr.AddShape(nam);
-
-            FileHandle.SaveToFile("latesh.skt", smgr.GetShapesVec());
-
-
-            Close();
+            else if (shapeType == "Cube")
+            {
+                aBox = Add("Side", "10");
+            }
+            else if (shapeType == "Sphere")
+            {
+                aBox = Add("Radius", "10");
+            }
+            else if (shapeType == "Cylinder" || shapeType == "Cone")
+            {
+                aBox = Add("Radius", "10");
+                cBox = Add("Height", "10");
+            }
+            else if (shapeType == "Pyramid")
+            {
+                aBox = Add("Base Length", "10");
+                bBox = Add("Base Width", "10");
+                cBox = Add("Height", "10");
+            }
         }
 
-
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private TextBox Add(string label, string def)
         {
-            MessageBox.Show("Cancel making Shape!");
-            Close();
+            int row = CentralGrid.RowDefinitions.Count;
+            CentralGrid.RowDefinitions.Add(new RowDefinition());
+
+            Label lbl = new Label();
+            lbl.Content = label;
+            lbl.Margin = new Thickness(5);
+
+            Grid.SetRow(lbl, row);
+            CentralGrid.Children.Add(lbl);
+
+            TextBox tb = new TextBox();
+            tb.Text = def;
+            tb.Margin = new Thickness(5);
+
+            Grid.SetRow(tb, row);
+            Grid.SetColumn(tb, 1);
+
+            CentralGrid.Children.Add(tb);
+            return tb;
+        }
+
+        private void Ok_Click(object sender, RoutedEventArgs e)
+        {
+            string name = nameBox.Text;
+
+            try
+            {
+                if (shapeType == "Cuboid")
+                {
+                    CreatedShape = new Cuboid(
+                        name,
+                        double.Parse(aBox.Text),
+                        double.Parse(bBox.Text),
+                        double.Parse(cBox.Text));
+                }
+                else if (shapeType == "Cube")
+                {
+                    CreatedShape = new Cube(
+                        name,
+                        double.Parse(aBox.Text));
+                }
+                else if (shapeType == "Sphere")
+                {
+                    CreatedShape = new Sphere(
+                        name,
+                        double.Parse(aBox.Text));
+                }
+                else if (shapeType == "Cylinder")
+                {
+                    CreatedShape = new Cylinder(
+                        name,
+                        double.Parse(aBox.Text),
+                        double.Parse(cBox.Text));
+                }
+                else if (shapeType == "Cone")
+                {
+                    CreatedShape = new Cone(
+                        name,
+                        double.Parse(aBox.Text),
+                        double.Parse(cBox.Text));
+                }
+                else if (shapeType == "Pyramid")
+                {
+                    CreatedShape = new Pyramid(
+                        name,
+                        double.Parse(aBox.Text),
+                        double.Parse(bBox.Text),
+                        double.Parse(cBox.Text));
+                }
+
+                DialogResult = true;
+            }
+            catch
+            {
+                MessageBox.Show("Invalid numeric input");
+            }
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
         }
     }
 }
-
-

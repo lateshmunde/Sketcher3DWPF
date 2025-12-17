@@ -8,7 +8,7 @@ namespace Sketcher3D.GeometryEngine
     {
         private double mRadius;
 
-        public Sphere(string name, double radius, double height) : base("Sphere", name)
+        public Sphere(string name, double radius) : base("Sphere", name)
         {
             this.mRadius = radius;
             Build();

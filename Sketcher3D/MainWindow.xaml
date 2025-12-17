@@ -34,13 +34,18 @@
                 </Grid.ColumnDefinitions>
                 <Menu>
                     <Button Name="Cuboid" Content="Cuboid" FontSize="18" Width="70" Height="30" Margin="4" Click="Cuboid_Click" />
-                    <Button Name="Cube" Content="Cube" FontSize="18" Width="70" Height="30" Margin="4"/>
-                    <Button Name="Cone" Content="Cone" FontSize="18" Width="70" Height="30" Margin="4"/>
-                    <Button Name="Sphere" Content="Sphere" FontSize="18" Width="70" Height="30" Margin="4"/>
-                    <Button Name="Cylinder" Content="Cylinder" FontSize="18" Width="70" Height="30" Margin="4"/>
-                    <Button Name="Pyramid" Content="Pyramid" FontSize="18" Width="70" Height="30" Margin="4"/>
+                    <Button Name="Cube" Content="Cube" FontSize="18" Width="70" Height="30" Margin="4" Click="Cube_Click"/>
+                    <Button Name="Cone" Content="Cone" FontSize="18" Width="70" Height="30" Margin="4" Click="Cone_Click"/>
+                    <Button Name="Sphere" Content="Sphere" FontSize="18" Width="70" Height="30" Margin="4" Click="Sphere_Click"/>
+                    <Button Name="Cylinder" Content="Cylinder" FontSize="18" Width="70" Height="30" Margin="4" Click="Cylinder_Click"/>
+                    <Button Name="Pyramid" Content="Pyramid" FontSize="18" Width="70" Height="30" Margin="4" Click="Pyramid_Click"/>
                 </Menu>
             </Grid>
         </Grid>
+
+        <!-- 3D VIEWPORT -->
+        <Viewport3D x:Name="MainViewport"
+                    Grid.Row="1"
+                    ClipToBounds="True"/>
     </Grid>
 </Window>

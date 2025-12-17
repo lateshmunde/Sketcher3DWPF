@@ -6,22 +6,38 @@
         xmlns:local="clr-namespace:Sketcher3D"
         mc:Ignorable="d"
         Title="ShapeInputDlg" Height="250" Width="300">
-    <Grid>
-        <Label Content="Name: " Margin="70,50,0,0"  HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBox Name="name" HorizontalAlignment="Left" Margin="150,55,0,0" TextWrapping="Wrap" Text="Default" VerticalAlignment="Top" Width="120"/>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <Label  Content="Length: " Margin="70,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBox Name="len" HorizontalAlignment="Left" Margin="150,80,0,0" TextWrapping="Wrap" Text="Default" VerticalAlignment="Top" Width="120"/>
+        <!-- Input area -->
+        <Grid x:Name="CentralGrid"
+          Grid.Row="0"
+          HorizontalAlignment="Stretch">
 
-        <Label Content="Width: " Margin="70,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBox Name="wid" HorizontalAlignment="Left" Margin="150,105,0,0" TextWrapping="Wrap" Text="Default" VerticalAlignment="Top" Width="120"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
 
-        <Label Content="Height: " Margin="70,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBox Name="ht" HorizontalAlignment="Left" Margin="150,130,0,0" TextWrapping="Wrap" Text="Default" VerticalAlignment="Top" Width="120"/>
-
-        <Button Name="OkButton" Content=" Ok " HorizontalAlignment="Left" Margin="100,160,0,0" VerticalAlignment="Top" Click="OkButton_Cuboid_Click"/>
-        
-        
-        <Button Name="CancelButton" Content=" Cancel " HorizontalAlignment="Left" Margin="200,160,0,0" VerticalAlignment="Top" Click="CancelButton_Click"/>
+        <!-- Buttons -->
+        <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,15,0,0">
+            <Button Content="OK"
+                Width="80"
+                Margin="10"
+                Click="OkButton_Cuboid_Click"/>
+            <Button Content="Cancel"
+                Width="80"
+                Margin="10"
+                Click="CancelButton_Click"/>
+        </StackPanel>
     </Grid>
+
+
 </Window>
