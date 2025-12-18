@@ -31,10 +31,10 @@ namespace Sketcher3D.GeometryEngine
 
             List <int> bPtsIndex = new List<int>();
 
-            int originInd = mTriangulation.GetPointIndex(origin);
-            int apexInd = mTriangulation.GetPointIndex(apex);
+            int originInd = mTriangulation.AddPoint(origin);
+            int apexInd = mTriangulation.AddPoint(apex);
 
-            bPtsIndex.Add(mTriangulation.GetPointIndex(new Point(x + mRadius * Math.Cos(0), y + mRadius * Math.Sin(0), z)));
+            bPtsIndex.Add(mTriangulation.AddPoint(new Point(x + mRadius * Math.Cos(0), y + mRadius * Math.Sin(0), z)));
 
             int number = 72;
             double dTheta = 2 * Math.PI / number; // 0 to 180        
@@ -45,7 +45,7 @@ namespace Sketcher3D.GeometryEngine
                 double x_ = mRadius * Math.Cos(theta);
                 double y_ = mRadius * Math.Sin(theta);
 
-                bPtsIndex.Add(mTriangulation.GetPointIndex(new Point(x + x_, y + y_, z)));
+                bPtsIndex.Add(mTriangulation.AddPoint(new Point(x + x_, y + y_, z)));
 
                 // each 5 degree section has 4 triangles.
                 mTriangulation.AddTriangle(bPtsIndex[i - 1], originInd, bPtsIndex[i]);      // Base circle center, two points on it's circumference

@@ -13,9 +13,9 @@ namespace Sketcher3D.GeometryEngine
             this.mName = name;
         }
 
-        protected Triangulation mTriangulation = new Triangulation();
-        public Triangulation GetTriangulation() { return mTriangulation; }
-        protected abstract void Build();
+        protected Triangulation mTriangulation = new Triangulation();//like triangulation object in c++
+        public Triangulation GetTriangulation() { return mTriangulation; }//get that object (mTriag in c++)
+        protected abstract void Build();//overrided in derived shapes classes
 
         public string GetShapeName() {  return mName;  }
         public string GetShapeType() { return mType; }

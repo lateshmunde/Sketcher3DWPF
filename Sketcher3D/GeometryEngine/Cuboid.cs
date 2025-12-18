@@ -28,22 +28,22 @@ namespace Sketcher3D.GeometryEngine
             double y = 0;
             double z = 0;
 
-            int p0Ind = mTriangulation.GetPointIndex(new Point(x, y, z));
-            int p1Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y, z));
-            int p2Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y + mWidth, z));
+            int p0Ind = mTriangulation.AddPoint(new Point(x, y, z));
+            int p1Ind = mTriangulation.AddPoint(new Point(x + mLength, y, z));
+            int p2Ind = mTriangulation.AddPoint(new Point(x + mLength, y + mWidth, z));
 
             mTriangulation.AddTriangle(p0Ind, p2Ind, p1Ind); // front
 
-            int p3Ind = mTriangulation.GetPointIndex(new Point(x, y + mWidth, z));
+            int p3Ind = mTriangulation.AddPoint(new Point(x, y + mWidth, z));
             mTriangulation.AddTriangle(p0Ind, p3Ind, p2Ind); // front
 
-            int p4Ind = mTriangulation.GetPointIndex(new Point(x, y, z + mHeight));
-            int p5Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y, z + mHeight));
-            int p6Ind = mTriangulation.GetPointIndex(new Point(x + mLength, y + mWidth, z + mHeight));
+            int p4Ind = mTriangulation.AddPoint(new Point(x, y, z + mHeight));
+            int p5Ind = mTriangulation.AddPoint(new Point(x + mLength, y, z + mHeight));
+            int p6Ind = mTriangulation.AddPoint(new Point(x + mLength, y + mWidth, z + mHeight));
 
             mTriangulation.AddTriangle(p4Ind, p5Ind, p6Ind); // back
 
-            int p7Ind = mTriangulation.GetPointIndex(new Point(x, y + mWidth, z + mHeight));
+            int p7Ind = mTriangulation.AddPoint(new Point(x, y + mWidth, z + mHeight));
             mTriangulation.AddTriangle(p4Ind, p6Ind, p7Ind); // back
 
             mTriangulation.AddTriangle(p7Ind, p6Ind, p2Ind); // top

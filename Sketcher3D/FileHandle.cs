@@ -71,9 +71,9 @@ namespace Sketcher3D
                         points.Add(new Point(x, y, z));
                         if (points.Count == 3)
                         {
-                            int p1 = tri.GetPointIndex(points[0]);
-                            int p2 = tri.GetPointIndex(points[1]);
-                            int p3 = tri.GetPointIndex(points[2]);
+                            int p1 = tri.AddPoint(points[0]);
+                            int p2 = tri.AddPoint(points[1]);
+                            int p3 = tri.AddPoint(points[2]);
                             tri.AddTriangle(p1, p2, p3, normal);
                             points.Clear();
                         }

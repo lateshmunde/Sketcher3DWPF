@@ -36,15 +36,15 @@ namespace Sketcher3D.GeometryEngine
             double halfL = mBaseLength / 2.0; // center as origin
             double halfW = mBaseWidth / 2.0;
 
-            int p0Ind = mTriangulation.GetPointIndex(new Point(x + halfL, y + halfW, z)); //b1 base points
-            int p1Ind = mTriangulation.GetPointIndex(new Point(x + halfL, y - halfW, z)); //b2
-            int p2Ind = mTriangulation.GetPointIndex(new Point(x - halfL, y - halfW, z)); //b3
-            int p3Ind = mTriangulation.GetPointIndex(new Point(x - halfL, y + halfW, z)); //b4
+            int p0Ind = mTriangulation.AddPoint(new Point(x + halfL, y + halfW, z)); //b1 base points
+            int p1Ind = mTriangulation.AddPoint(new Point(x + halfL, y - halfW, z)); //b2
+            int p2Ind = mTriangulation.AddPoint(new Point(x - halfL, y - halfW, z)); //b3
+            int p3Ind = mTriangulation.AddPoint(new Point(x - halfL, y + halfW, z)); //b4
 
             mTriangulation.AddTriangle(p0Ind, p2Ind, p3Ind);//base
             mTriangulation.AddTriangle(p2Ind, p0Ind, p1Ind);//base
 
-            int apexInd = mTriangulation.GetPointIndex(new Point(x, y, z + mHeight)); //Apex
+            int apexInd = mTriangulation.AddPoint(new Point(x, y, z + mHeight)); //Apex
 
             mTriangulation.AddTriangle(p1Ind, p0Ind, apexInd);
             mTriangulation.AddTriangle(p2Ind, p1Ind, apexInd);

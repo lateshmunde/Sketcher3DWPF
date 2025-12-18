@@ -42,12 +42,12 @@ namespace Sketcher3D.GeometryEngine
                     double jLatitude2 = 2 * Math.PI * (double)(j + 1) / number;
 
                     // First ring
-                    int idx1 = mTriangulation.GetPointIndex(new Point(r1 * Math.Cos(jLatitude1), r1 * Math.Sin(jLatitude1), z1));
-                    int idx2 = mTriangulation.GetPointIndex(new Point(r1 * Math.Cos(jLatitude2), r1 * Math.Sin(jLatitude2), z1));
+                    int idx1 = mTriangulation.AddPoint(new Point(r1 * Math.Cos(jLatitude1), r1 * Math.Sin(jLatitude1), z1));
+                    int idx2 = mTriangulation.AddPoint(new Point(r1 * Math.Cos(jLatitude2), r1 * Math.Sin(jLatitude2), z1));
 
                     // Second ring
-                    int idx3 = mTriangulation.GetPointIndex(new Point(r2 * Math.Cos(jLatitude1), r2 * Math.Sin(jLatitude1), z2));
-                    int idx4 = mTriangulation.GetPointIndex(new Point(r2 * Math.Cos(jLatitude2), r2 * Math.Sin(jLatitude2), z2));
+                    int idx3 = mTriangulation.AddPoint(new Point(r2 * Math.Cos(jLatitude1), r2 * Math.Sin(jLatitude1), z2));
+                    int idx4 = mTriangulation.AddPoint(new Point(r2 * Math.Cos(jLatitude2), r2 * Math.Sin(jLatitude2), z2));
 
                     // Triangle 1
                     mTriangulation.AddTriangle(idx1, idx2, idx3);

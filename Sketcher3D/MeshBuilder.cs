@@ -9,8 +9,8 @@ namespace Sketcher3D
         {
             MeshGeometry3D mesh = new MeshGeometry3D();
 
-            var v = t.GetPointsDoubleData();
-            var n = t.GetNormalDoubleData();
+            var v = t.GetDoubleDataforWPF();
+            var n = t.GetNormalDoubleDataforWPF();
 
             for (int i = 0; i < v.Count; i += 3)
             {

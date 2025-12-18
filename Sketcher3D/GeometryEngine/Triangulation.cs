@@ -16,7 +16,7 @@ namespace Sketcher3D.GeometryEngine
         public List<Triangle> GetTriangles() { return mTriangles; }
         public List<Point> GetNormals() { return mNormals; }
 
-        public int GetPointIndex(Point p)
+        public int AddPoint(Point p)
         {
             if (pointIndex.TryGetValue(p, out int existingIndex)) 
                 return existingIndex;
@@ -61,7 +61,7 @@ namespace Sketcher3D.GeometryEngine
             return u;
         }
 
-        public List<double> GetPointsDoubleData()
+        public List<double> GetDoubleDataforWPF()
         {
             List<double> points = new List<double>();
 
@@ -82,7 +82,7 @@ namespace Sketcher3D.GeometryEngine
             return points;
         }
 
-        public List<double> GetNormalDoubleData()
+        public List<double> GetNormalDoubleDataforWPF()
         {
             List<double> points = new List<double>();
 
