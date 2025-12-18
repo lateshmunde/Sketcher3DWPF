@@ -25,7 +25,7 @@ namespace Sketcher3D
         private TranslateTransform3D zoomTransform;
 
         // Camera distance
-        private double zoom = 200;
+        private double zoom = 350;
 
         public MainWindow()
         {
@@ -37,7 +37,7 @@ namespace Sketcher3D
         private void Setup3D()
         {
             camera = new PerspectiveCamera(); //WPF default coordinate system
-            camera.Position = new Point3D(0, 0, 200); //placed on +Z
+            camera.Position = new Point3D(0, 0, 350); //placed on +Z
             camera.LookDirection = new Vector3D(0, 0, -1);
             camera.UpDirection = new Vector3D(0, 1, 0);
             camera.FieldOfView = 60;
