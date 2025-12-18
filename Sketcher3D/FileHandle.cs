@@ -50,10 +50,11 @@ namespace Sketcher3D
                 {
                     if (line.Contains("facet normal"))
                     {
-                        string[] words = line.Split(' ');
-                        float x = float.Parse(words[2]);
-                        float y = float.Parse(words[3]);
-                        float z = float.Parse(words[4]);
+                        //string[] words = line.Split(' ');
+                        string[] words = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        double x = double.Parse(words[2]);
+                        double y = double.Parse(words[3]);
+                        double z = double.Parse(words[4]);
 
                         normal.SetX(x);
                         normal.SetY(y);
@@ -63,10 +64,13 @@ namespace Sketcher3D
 
                     if (line.Contains("vertex"))
                     {
-                        string[] words = line.Split(' ');
-                        float x = float.Parse(words[1]);
-                        float y = float.Parse(words[2]);
-                        float z = float.Parse(words[3]);
+                        //string[] words = line.Split(' ');
+                        string[] words = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        double x = double.Parse(words[1]);
+                        double y = double.Parse(words[2]);
+                        double z = double.Parse(words[3]);
+
+                        points = new List<Point>();
 
                         points.Add(new Point(x, y, z));
                         if (points.Count == 3)
@@ -75,13 +79,10 @@ namespace Sketcher3D
                             int p2 = tri.GetPointIndex(points[1]);
                             int p3 = tri.GetPointIndex(points[2]);
                             tri.AddTriangle(p1, p2, p3, normal);
-                            points.Clear();
                         }
                     }
                 }
             }
-
-
         }
     }
 }

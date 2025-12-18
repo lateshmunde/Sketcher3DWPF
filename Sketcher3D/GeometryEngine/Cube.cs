@@ -72,41 +72,42 @@ namespace Sketcher3D.GeometryEngine
             pts.Add(new Point(x, y + mSide, z));//p4
             pts.Add(new Point(x, y, z));//p1
             vec.Add(pts);
-            pts.Clear();
 
+            pts = new List<Point>();
             pts.Add(new Point(x, y, z + mSide));//p5
             pts.Add(new Point(x + mSide, y, z + mSide));//p6
             pts.Add(new Point(x + mSide, y + mSide, z + mSide));//p7
             pts.Add(new Point(x, y + mSide, z + mSide));//p8
             pts.Add(new Point(x, y, z + mSide));//p1
             vec.Add(pts);
-            pts.Clear();
 
+            pts = new List<Point>();
             pts.Add(new Point(x, y, z));//p1
             pts.Add(new Point(x, y, z + mSide));//p5
             vec.Add(pts);
-            pts.Clear();
 
+            pts = new List<Point>();
             pts.Add(new Point(x + mSide, y, z));//p2
             pts.Add(new Point(x + mSide, y, z + mSide));//p6
             vec.Add(pts);
-            pts.Clear();
 
+            pts = new List<Point>();
             pts.Add(new Point(x + mSide, y + mSide, z));//p3
             pts.Add(new Point(x + mSide, y + mSide, z + mSide));//p7
             vec.Add(pts);
-            pts.Clear();
 
+            pts = new List<Point>();
             pts.Add(new Point(x, y + mSide, z));//p4
             pts.Add(new Point(x, y + mSide, z + mSide));//p8
             vec.Add(pts);
-            pts.Clear();
 
-            foreach (var ptsVec in vec)
+            foreach (List<Point> ptsVec in vec)
             {
-                foreach (var pt in ptsVec)
+                foreach (Point pt in ptsVec)
                 {
-                    pt.WriteXYZ(writer);
+                    writer.Write(pt.GetX()); writer.Write(" ");
+                    writer.Write(pt.GetY()); writer.Write(" ");
+                    writer.Write(pt.GetZ()); writer.WriteLine(" ");
                 }
                 writer.Write("\n\n");
             }

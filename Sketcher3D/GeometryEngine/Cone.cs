@@ -99,7 +99,9 @@ namespace Sketcher3D.GeometryEngine
             {
                 foreach (var pt in ptsVec)
                 {
-                    pt.WriteXYZ(writer);
+                    writer.Write(pt.GetX()); writer.Write(" ");
+                    writer.Write(pt.GetY()); writer.Write(" ");
+                    writer.Write(pt.GetZ()); writer.Write(" ");
                 }
                 writer.Write("\n\n");
             }

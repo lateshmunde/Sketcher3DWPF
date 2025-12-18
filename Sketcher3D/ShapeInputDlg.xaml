@@ -24,18 +24,9 @@
         </Grid>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="1"
-                Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Margin="0,15,0,0">
-            <Button Content="OK"
-                Width="80"
-                Margin="10"
-                Click="Ok_Click"/>
-            <Button Content="Cancel"
-                Width="80"
-                Margin="10"
-                Click="Cancel_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+            <Button Content="OK" Width="80" Margin="10" Click="Ok_Click"/>
+            <Button Content="Cancel" Width="80" Margin="10" Click="Cancel_Click"/>
         </StackPanel>
     </Grid>
 

@@ -1,5 +1,10 @@
-﻿using Sketcher3D.GeometryEngine;
+﻿using Microsoft.Win32;
+using Sketcher3D;
+using Sketcher3D.GeometryEngine;
+using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -9,6 +14,19 @@ namespace Sketcher3D
     {
         private ShapeManager shapeManager = new ShapeManager();
         private Model3DGroup scene = new Model3DGroup();
+        private Triangulation tri = new Triangulation();
+
+        // Mouse interaction state
+        private System.Windows.Point lastMousePos;
+        private bool isRotating = false;
+
+        // Transforms
+        private AxisAngleRotation3D rotX;
+        private AxisAngleRotation3D rotY;
+        private TranslateTransform3D zoomTransform;
+
+        // Camera distance
+        private double zoom = 100;
 
         public MainWindow()
         {
@@ -16,30 +34,43 @@ namespace Sketcher3D
             Setup3D();
         }
 
-        // 3D SETUP 
+        // 3D SETUP
         private void Setup3D()
         {
-            PerspectiveCamera camera = new PerspectiveCamera();
-            camera.Position = new Point3D(0, 0, 500);
+            PerspectiveCamera camera = new PerspectiveCamera(); //WPF default coordinate system
+            camera.Position = new Point3D(0, 0, 100); //placed on +Z
             camera.LookDirection = new Vector3D(0, 0, -1);
             camera.UpDirection = new Vector3D(0, 1, 0);
             camera.FieldOfView = 60;
 
-            MainViewport.Camera = camera;
+            MainViewport.Camera = camera; //Assigns the camera to the viewport
 
             DirectionalLight light =
                 new DirectionalLight(Colors.White, new Vector3D(-1, -1, -2));
 
             scene.Children.Add(light);
 
-            ModelVisual3D visual = new ModelVisual3D();
+            //transforms
+            rotX = new AxisAngleRotation3D(new Vector3D(1, 0, 0), 0);
+            rotY = new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0);
+            zoomTransform = new TranslateTransform3D(0, 0, 0);
+
+            Transform3DGroup tg = new Transform3DGroup();
+            tg.Children.Add(new RotateTransform3D(rotX));
+            tg.Children.Add(new RotateTransform3D(rotY));
+            tg.Children.Add(zoomTransform);
+
+            scene.Transform = tg;
+
+
+            ModelVisual3D visual = new ModelVisual3D(); //It connects the 3D scene to the viewport
             visual.Content = scene;
 
             MainViewport.Children.Add(visual);
         }
 
-        // ADD SHAPE
-        private void AddShapes(Shape shape)
+        // ADD 3D SHAPE
+        private void Add3DShape(Shape shape) //Called when user clicks OK in dialog
         {
             shapeManager.AddShape(shape);
 
@@ -51,7 +82,22 @@ namespace Sketcher3D
             model.Material =
                 new DiffuseMaterial(new SolidColorBrush(Colors.LightBlue));
 
-            model.Transform = new Transform3DGroup();
+            model.Transform = new Transform3DGroup(); //no use for now
+
+            scene.Children.Add(model);
+        }
+
+        private void Add3DShape() //Called when user clicks OK in dialog
+        {
+            MeshGeometry3D mesh =
+                MeshBuilder.FromTriangulation(tri);
+
+            GeometryModel3D model = new GeometryModel3D();
+            model.Geometry = mesh;
+            model.Material =
+                new DiffuseMaterial(new SolidColorBrush(Colors.LightBlue));
+
+            model.Transform = new Transform3DGroup(); //no use for now
 
             scene.Children.Add(model);
         }
@@ -89,12 +135,138 @@ namespace Sketcher3D
 
         private void OpenDialog(string type)
         {
-            ShapeInputDlg dlg = new ShapeInputDlg(type);
+            ShapeInputDlg dlg = new ShapeInputDlg(type); 
 
             if (dlg.ShowDialog() == true)
             {
-                AddShapes(dlg.GetShape());
+                Add3DShape(dlg.GetShape()); // If user clicks OK: shape is returned
             }
         }
+
+
+        private void SaveSkt_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save Shapes";
+            dlg.Filter = "Sketcher Files (*.skt)|*.skt";
+
+            if (dlg.ShowDialog() != true)
+                return;
+
+            List<Shape> shapesVec = shapeManager.GetShapesVec();
+
+            if (FileHandle.SaveToFile(dlg.FileName, shapesVec))
+            {
+                MessageBox.Show(
+                    "Shapes saved in .skt format.",
+                    "Save in .skt",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Shapes not saved!",
+                    "Not Saved",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
+        }
+
+        private void SaveGNU_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "Save Shapes";
+            dlg.Filter = "GNU Plot Data (*.dat)|*.dat";
+
+            if (dlg.ShowDialog() != true)
+                return;
+
+            List<Shape> shapesVec = shapeManager.GetShapesVec();
+
+            if (FileHandle.SaveToFileGNUPlot(dlg.FileName, shapesVec))
+            {
+                MessageBox.Show("Shapes saved for GNU.", "Save for GNU", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Shapes not saved!", "Not Saved", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void LoadSTL_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Title = "Open STL";
+            dlg.Filter = "STL Files (*.stl)|*.stl";
+
+            if (dlg.ShowDialog() != true)
+                return;
+
+            FileHandle.ReadSTL(dlg.FileName, tri);
+
+            if (tri.GetPointsDoubleData().Count != 0)
+            {
+                Add3DShape();
+                MessageBox.Show("Shapes loaded and rendered in 3D viewer!", "Load", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Shapes not loaded!", "Not Loaded", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            scene.Children.Clear();
+            shapeManager.ClearShape();
+            
+        }
+
+        private void MainViewport_PreviewMouseDown(object sender, MouseButtonEventArgs e) //start rotation
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                lastMousePos = e.GetPosition(MainViewport);
+                isRotating = true;
+                Mouse.Capture(MainViewport);
+            }
+        }
+
+        private void MainViewport_PreviewMouseUp(object sender, MouseButtonEventArgs e) //stop rotaion
+        {
+            isRotating = false;
+            Mouse.Capture(null);
+        }
+
+
+        private void MainViewport_PreviewMouseMove(object sender, MouseEventArgs e) //rotation
+        {
+            if (!isRotating)
+                return;
+
+            System.Windows.Point currentPos = e.GetPosition(MainViewport);
+            Vector delta = currentPos - lastMousePos;
+
+            rotY.Angle += delta.X * 0.5;   // horizontal drag
+            rotX.Angle += delta.Y * 0.5;   // vertical drag
+
+            lastMousePos = currentPos;
+        }
+
+        private void MainViewport_MouseWheel(object sender, MouseWheelEventArgs e) //mouse wheel
+        {
+            if (e.Delta > 0)
+                zoom -= 5;
+            else
+                zoom += 5;
+
+            if (zoom < 20) zoom = 20;
+            if (zoom > 300) zoom = 300;
+
+            zoomTransform.OffsetZ = zoom - 100;
+        }
+
     }
 }
+

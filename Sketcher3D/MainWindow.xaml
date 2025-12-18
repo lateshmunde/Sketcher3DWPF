@@ -20,11 +20,12 @@
             </Grid.RowDefinitions>
             <Menu>
                 <MenuItem Header="File" FontSize="16">
-                    <MenuItem Header="Save(.skt)" FontSize="14"/>
-                    <MenuItem Header="SaveGNU(.dat)" FontSize="14"/>
+                    <MenuItem Name="SaveSkt" Header="Save(.skt)" FontSize="14" Click="SaveSkt_Click"/>
+                    <MenuItem Name="SaveGNU" Header="SaveGNU(.dat)" FontSize="14" Click="SaveGNU_Click"/>
+                    <MenuItem Name="LoadSTL" Header="LoadSTL" FontSize="14" Click="LoadSTL_Click"/>
                 </MenuItem>
                 <MenuItem Header="Edit" FontSize="16">
-                    <MenuItem Header="Clear" FontSize="14"/>
+                    <MenuItem Name="Clear" Header="Clear" FontSize="14" Click="Clear_Click"/>
                 </MenuItem>
             </Menu>
 
@@ -45,7 +46,12 @@
 
         <!-- 3D VIEWPORT -->
         <Viewport3D x:Name="MainViewport"
-                    Grid.Row="1"
-                    ClipToBounds="True"/>
+            Grid.Row="1"
+            ClipToBounds="True"
+            MouseDown="MainViewport_PreviewMouseDown"
+            MouseMove="MainViewport_PreviewMouseMove"
+            MouseUp="MainViewport_PreviewMouseUp"
+            MouseWheel="MainViewport_MouseWheel"/>
+
     </Grid>
 </Window>

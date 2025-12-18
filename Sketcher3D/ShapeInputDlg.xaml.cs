@@ -7,8 +7,6 @@ namespace Sketcher3D
     public partial class ShapeInputDlg : Window
     {
         private Shape CreatedShape;
-        //public Shape CreatedShape;
-
         private string shapeType;
 
         private TextBox nameBox;
@@ -59,7 +57,7 @@ namespace Sketcher3D
             }
         }
 
-        private TextBox Add(string label, string def)
+        private TextBox Add(string label, string value)
         {
             int row = CentralGrid.RowDefinitions.Count;
             CentralGrid.RowDefinitions.Add(new RowDefinition());
@@ -69,10 +67,10 @@ namespace Sketcher3D
             lbl.Margin = new Thickness(5);
 
             Grid.SetRow(lbl, row);
-            CentralGrid.Children.Add(lbl);
+            CentralGrid.Children.Add(lbl); //Places label in grid row
 
             TextBox tb = new TextBox();
-            tb.Text = def;
+            tb.Text = value;
             tb.Margin = new Thickness(5);
 
             Grid.SetRow(tb, row);
@@ -90,48 +88,30 @@ namespace Sketcher3D
             {
                 if (shapeType == "Cuboid")
                 {
-                    CreatedShape = new Cuboid(
-                        name,
-                        double.Parse(aBox.Text),
-                        double.Parse(bBox.Text),
-                        double.Parse(cBox.Text));
+                    CreatedShape = new Cuboid(name, double.Parse(aBox.Text), double.Parse(bBox.Text), double.Parse(cBox.Text));
                 }
                 else if (shapeType == "Cube")
                 {
-                    CreatedShape = new Cube(
-                        name,
-                        double.Parse(aBox.Text));
+                    CreatedShape = new Cube(name, double.Parse(aBox.Text));
                 }
                 else if (shapeType == "Sphere")
                 {
-                    CreatedShape = new Sphere(
-                        name,
-                        double.Parse(aBox.Text));
+                    CreatedShape = new Sphere(name, double.Parse(aBox.Text));
                 }
                 else if (shapeType == "Cylinder")
                 {
-                    CreatedShape = new Cylinder(
-                        name,
-                        double.Parse(aBox.Text),
-                        double.Parse(cBox.Text));
+                    CreatedShape = new Cylinder(name, double.Parse(aBox.Text), double.Parse(cBox.Text));
                 }
                 else if (shapeType == "Cone")
                 {
-                    CreatedShape = new Cone(
-                        name,
-                        double.Parse(aBox.Text),
-                        double.Parse(cBox.Text));
+                    CreatedShape = new Cone(name, double.Parse(aBox.Text), double.Parse(cBox.Text));
                 }
                 else if (shapeType == "Pyramid")
                 {
-                    CreatedShape = new Pyramid(
-                        name,
-                        double.Parse(aBox.Text),
-                        double.Parse(bBox.Text),
-                        double.Parse(cBox.Text));
+                    CreatedShape = new Pyramid(name, double.Parse(aBox.Text), double.Parse(bBox.Text), double.Parse(cBox.Text));
                 }
 
-                DialogResult = true;
+                DialogResult = true; //Closes dialog , Signals success
             }
             catch
             {
@@ -141,9 +121,7 @@ namespace Sketcher3D
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false;
+            DialogResult = false; //Closes dialog, Shape is discarded
         }
-
-    
     }
 }
