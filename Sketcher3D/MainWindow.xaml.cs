@@ -1,7 +1,5 @@
 ﻿using Microsoft.Win32;
-using Sketcher3D;
 using Sketcher3D.GeometryEngine;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -15,6 +13,7 @@ namespace Sketcher3D
         private ShapeManager shapeManager = new ShapeManager();
         private Model3DGroup scene = new Model3DGroup();
         private Triangulation tri = new Triangulation();
+        PerspectiveCamera camera;
 
         // Mouse interaction state
         private System.Windows.Point lastMousePos;
@@ -26,7 +25,7 @@ namespace Sketcher3D
         private TranslateTransform3D zoomTransform;
 
         // Camera distance
-        private double zoom = 100;
+        private double zoom = 200;
 
         public MainWindow()
         {
@@ -37,8 +36,8 @@ namespace Sketcher3D
         // 3D SETUP
         private void Setup3D()
         {
-            PerspectiveCamera camera = new PerspectiveCamera(); //WPF default coordinate system
-            camera.Position = new Point3D(0, 0, 100); //placed on +Z
+            camera = new PerspectiveCamera(); //WPF default coordinate system
+            camera.Position = new Point3D(0, 0, 200); //placed on +Z
             camera.LookDirection = new Vector3D(0, 0, -1);
             camera.UpDirection = new Vector3D(0, 1, 0);
             camera.FieldOfView = 60;
@@ -46,7 +45,7 @@ namespace Sketcher3D
             MainViewport.Camera = camera; //Assigns the camera to the viewport
 
             DirectionalLight light =
-                new DirectionalLight(Colors.White, new Vector3D(-1, -1, -2));
+                new DirectionalLight(Colors.White, new Vector3D(0, 0, -1));
 
             scene.Children.Add(light);
 
@@ -70,7 +69,7 @@ namespace Sketcher3D
         }
 
         // ADD 3D SHAPE
-        private void Add3DShape(Shape shape) //Called when user clicks OK in dialog
+        private void Add3DShape(Shape shape) // For shapes //Called when user clicks OK in dialog 
         {
             shapeManager.AddShape(shape);
 
@@ -80,14 +79,14 @@ namespace Sketcher3D
             GeometryModel3D model = new GeometryModel3D();
             model.Geometry = mesh;
             model.Material =
-                new DiffuseMaterial(new SolidColorBrush(Colors.LightBlue));
+                new DiffuseMaterial(new SolidColorBrush(Colors.Red));
 
-            model.Transform = new Transform3DGroup(); //no use for now
+            model.Transform = new Transform3DGroup(); 
 
             scene.Children.Add(model);
         }
 
-        private void Add3DShape() //Called when user clicks OK in dialog
+        private void Add3DShape() //for LoadSTL
         {
             MeshGeometry3D mesh =
                 MeshBuilder.FromTriangulation(tri);
@@ -97,7 +96,19 @@ namespace Sketcher3D
             model.Material =
                 new DiffuseMaterial(new SolidColorBrush(Colors.LightBlue));
 
-            model.Transform = new Transform3DGroup(); //no use for now
+            model.Transform = new Transform3DGroup();
+
+            scene.Children.Add(model);
+        }
+
+        private void Add3DShape(MeshGeometry3D mesh) //for transformations
+        {
+            GeometryModel3D model = new GeometryModel3D();
+            model.Geometry = mesh;
+            model.Material =
+                new DiffuseMaterial(new SolidColorBrush(Colors.LightBlue));
+
+            model.Transform = new Transform3DGroup();
 
             scene.Children.Add(model);
         }
@@ -142,7 +153,24 @@ namespace Sketcher3D
                 Add3DShape(dlg.GetShape()); // If user clicks OK: shape is returned
             }
         }
+        private void Translate_Click(object sender, RoutedEventArgs e)
+        {
+            OpenDialogTransform("Translate");
+        }
 
+        private void OpenDialogTransform(string type)
+        {
+            ShapeInputDlg dlg = new ShapeInputDlg(type);
+
+            if (dlg.ShowDialog() == true)
+            {
+                List<double> pts = dlg.GetmTransformed();
+                //List<double> norms = dlg.GetDoubleNormals();
+
+                MeshGeometry3D mesh = MeshBuilder.GetMeshPoints(pts);
+                Add3DShape(mesh); // If user clicks OK: shape is returned
+            }
+        }
 
         private void SaveSkt_Click(object sender, RoutedEventArgs e)
         {
@@ -218,7 +246,7 @@ namespace Sketcher3D
 
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            scene.Children.Clear();
+            //scene.Children.Clear();
             shapeManager.ClearShape();
             
         }
@@ -267,6 +295,7 @@ namespace Sketcher3D
             zoomTransform.OffsetZ = zoom - 100;
         }
 
+       
     }
 }
 

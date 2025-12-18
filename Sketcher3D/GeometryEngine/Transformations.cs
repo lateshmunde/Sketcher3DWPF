@@ -37,7 +37,7 @@ namespace Sketcher3D.GeometryEngine
             return transformedPts;
         }
 
-        public static List<float> Translate(List<float> vec, double transX, double transY, double transZ)
+        public static List<double> Translate(List<double> vec, double transX, double transY, double transZ)
         {
             List<Point> vertices = new List<Point>();
 
@@ -51,9 +51,9 @@ namespace Sketcher3D.GeometryEngine
 
             for (int i = 0; i < transformedPts.Count; i++)
             {
-                vec.Add((float)(transformedPts[i].GetX()));
-                vec.Add((float)(transformedPts[i].GetY()));
-                vec.Add((float)(transformedPts[i].GetZ()));
+                vec.Add((transformedPts[i].GetX()));
+                vec.Add((transformedPts[i].GetY()));
+                vec.Add((transformedPts[i].GetZ()));
             }
             return vec;
         }

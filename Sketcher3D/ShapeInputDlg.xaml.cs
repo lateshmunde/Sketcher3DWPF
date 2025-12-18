@@ -1,4 +1,5 @@
 ﻿using Sketcher3D.GeometryEngine;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,11 +9,14 @@ namespace Sketcher3D
     {
         private Shape CreatedShape;
         private string shapeType;
+        private string transfrom;
 
         private TextBox nameBox;
         private TextBox aBox; // length, radius, side
         private TextBox bBox; // width
-        private TextBox cBox; // heig
+        private TextBox cBox; // height
+
+        private List<double> mTransformed = new List<double>();
 
         public ShapeInputDlg(string type)
         {
@@ -22,6 +26,7 @@ namespace Sketcher3D
         }
 
         public Shape GetShape() => CreatedShape;
+        public List<double> GetmTransformed() => mTransformed;
 
         private void BuildUI()
         {
@@ -55,6 +60,14 @@ namespace Sketcher3D
                 bBox = Add("Base Width", "10");
                 cBox = Add("Height", "10");
             }
+
+            if (shapeType == "Translate")
+            {
+                aBox = Add("TranslateX", "1");
+                bBox = Add("TranslateY", "1");
+                cBox = Add("TranslateZ", "1");
+            }
+
         }
 
         private TextBox Add(string label, string value)
@@ -109,6 +122,17 @@ namespace Sketcher3D
                 else if (shapeType == "Pyramid")
                 {
                     CreatedShape = new Pyramid(name, double.Parse(aBox.Text), double.Parse(bBox.Text), double.Parse(cBox.Text));
+                }
+                else if (shapeType == "Translate")
+                {
+                    ShapeManager shapeManager = new ShapeManager();
+                    Shape shape = shapeManager.GetLastShape();
+                    //double tx = double.Parse(aBox.Text);
+                    //double ty = double.Parse(bBox.Text);
+                    //double tz = double.Parse(cBox.Text);
+
+                    List<double> vec = shape.GetTriangulation().GetPointsDoubleData();
+                    mTransformed = Transformations.Translate(vec, double.Parse(aBox.Text), double.Parse(bBox.Text), double.Parse(cBox.Text));
                 }
 
                 DialogResult = true; //Closes dialog , Signals success

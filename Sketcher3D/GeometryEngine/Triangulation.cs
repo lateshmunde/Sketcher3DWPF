@@ -28,14 +28,18 @@ namespace Sketcher3D.GeometryEngine
 
         public void AddTriangle(int a, int b, int c, Point normal = null)
         {
-            
             Triangle tri = new Triangle(a, b, c, normal);
             mTriangles.Add(tri);
             if (normal == null)
+            {
                 normal = new Point();
+                mNormals.Add(normal);
+            }
             else
+            {
                 normal = CalculateNormal(tri);
-            mNormals.Add(normal);
+                mNormals.Add(normal);
+            }
 
         }
         private Point CalculateNormal(Triangle tri)
@@ -57,7 +61,7 @@ namespace Sketcher3D.GeometryEngine
             double nz = u.GetX() * v.GetY() - u.GetY() * v.GetX();
 
             double len = Math.Sqrt(nx * nx + ny * ny + nz * nz);
-            u = new Point(nx / len, ny / len, nz / len);
+            u = new Point(-nx / len, -ny / len, -nz / len);
             return u;
         }
 

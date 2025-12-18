@@ -50,6 +50,7 @@ namespace Sketcher3D
                 {
                     if (line.Contains("facet normal"))
                     {
+                        normal = new Point();
                         //string[] words = line.Split(' ');
                         string[] words = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         double x = double.Parse(words[2]);
@@ -59,7 +60,6 @@ namespace Sketcher3D
                         normal.SetX(x);
                         normal.SetY(y);
                         normal.SetZ(z);
-
                     }
 
                     if (line.Contains("vertex"))
@@ -70,8 +70,6 @@ namespace Sketcher3D
                         double y = double.Parse(words[2]);
                         double z = double.Parse(words[3]);
 
-                        points = new List<Point>();
-
                         points.Add(new Point(x, y, z));
                         if (points.Count == 3)
                         {
@@ -79,6 +77,7 @@ namespace Sketcher3D
                             int p2 = tri.GetPointIndex(points[1]);
                             int p3 = tri.GetPointIndex(points[2]);
                             tri.AddTriangle(p1, p2, p3, normal);
+                            points = new List<Point>();
                         }
                     }
                 }

@@ -27,6 +27,9 @@
                 <MenuItem Header="Edit" FontSize="16">
                     <MenuItem Name="Clear" Header="Clear" FontSize="14" Click="Clear_Click"/>
                 </MenuItem>
+                <MenuItem Header="Transformations" FontSize="16">
+                    <MenuItem Name="Translate" Header="Translate" FontSize="14" Click="Translate_Click"/>
+                </MenuItem>
             </Menu>
 
             <Grid Grid.Row="1">
